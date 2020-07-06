@@ -1,237 +1,320 @@
-function civ(name, tree) {
-    resetToDefault(tree);
-
+function civ(name) {
     let selectedCiv = civsConfig[name];
+    const id_regex = /(?<type>.+)_(?<id>([\d]+|unique_unit|elite_unique_unit))_(x|copy)/;
 
-    let enabled = selectedCiv.enabled || {};
-    let disabled = selectedCiv.disabled || {};
-    let uniqueConfig = selectedCiv.unique || {};
-    if (selectedCiv.disableHorses) {
-        disableHorses();
-    }
+    // On reset, we need to NOT enable things we're about to disable again.
+    SVG.select('.cross').each(function(i) {
+       // If fill opacity is already 0, then this is already enabled.
+       if (this.attr('fill-opacity') === 0) return;
+       
+       // Parse this element's ID number.
+       let elId = this.id();
+       const found = elId.match(id_regex);
+       if (!found) {
+          return;
+       };
+       let id = parseInt(found.groups.id);
+       let type = found.groups.type;
 
-    enable(enabled.buildings || [], enabled.units || [], enabled.techs || []);
-    disable(disabled.buildings || [], disabled.units || [], disabled.techs || []);
-    unique(uniqueConfig || [], selectedCiv.monkPrefix);
+       // If this ID is in the next civ's disable list, then don't enable it.
+       if (type === 'unit') {
+          if (selectedCiv.units.includes(id)) return;
+       } else if (type === 'building') {
+          if (selectedCiv.buildings.includes(id)) return;
+       } else if (type === 'tech') {
+          if (selectedCiv.techs.includes(id)) return;
+       }
+
+       // Enable the element.
+       this.attr({'fill-opacity': 0});
+    });
+
+    // Make sure the uniques are enabled.
+    enable([], [UNIQUE_UNIT, ELITE_UNIQUE_UNIT], []);
+    // Disable based on the civ object.
+    disable(selectedCiv.buildings, selectedCiv.units, selectedCiv.techs);
+    // Setup the unique objects.
+    unique([selectedCiv.uniqueConfig.uniqueUnit,
+      selectedCiv.uniqueConfig.uniqueUnitElite,
+      selectedCiv.uniqueConfig.uniqueTechOne,
+      selectedCiv.uniqueConfig.uniqueTechTwo], selectedCiv.monkPrefix);
+}
+
+class Civ {
+   constructor(buildings, techs, units, monkPrefix, uniqueConfig) {
+      this.buildings = buildings || [];
+      this.techs = techs || [];
+      this.units = units || [];
+      this.monkPrefix = monkPrefix;
+      this.uniqueConfig = uniqueConfig;
+   }
+}
+
+class CivBuilder {
+   constructor(uniqueConfig) {
+      // Setup with default config, this is the default disable list...
+      this.buildings = [
+         KREPOST,
+         FEITORIA,
+      ];
+      this.units = [
+         // Units that are not often enabled
+         BATTLE_ELEPHANT,
+         ELITE_BATTLE_ELEPHANT,
+         STEPPE_LANCER,
+         ELITE_STEPPE_LANCER,
+         EAGLE_SCOUT,
+         EAGLE_WARRIOR,
+         ELITE_EAGLE_WARRIOR,
+         // unique units
+         SLINGER,
+         IMPERIAL_SKIRMISHER,
+         GENITOUR,
+         ELITE_GENITOUR,
+         CONDOTTIERO,
+         IMPERIAL_CAMEL_RIDER,
+         XOLOTL_WARRIOR,
+         TURTLE_SHIP,
+         ELITE_TURTLE_SHIP,
+         LONGBOAT,
+         ELITE_LONGBOAT,
+         CARAVEL,
+         ELITE_CARAVEL,
+         FLAMING_CAMEL,
+         KONNIK,
+         ELITE_KONNIK,
+         MISSIONARY,
+      ];
+      this.techs = [];
+      this.uniqueUnit = uniqueConfig.uniqueUnit;
+      this.uniqueUnitElite = uniqueConfig.uniqueUnitElite;
+      this.uniqueTechOne = uniqueConfig.uniqueTechOne;
+      this.uniqueTechTwo = uniqueConfig.uniqueTechTwo;
+      this.monkPrefix = uniqueConfig.monkPrefix;
+   }
+
+   disableHorses() {
+      this.buildings = this.buildings.concat([STABLE]);
+      this.techs = this.techs.concat([
+         BLOODLINES,
+         HUSBANDRY,
+         SCALE_BARDING_ARMOR,
+         CHAIN_BARDING_ARMOR,
+         PLATE_BARDING_ARMOR,
+         PARTHIAN_TACTICS,
+      ]);
+      this.units = this.units.concat([
+         SCOUT_CAVALRY,
+         LIGHT_CAVALRY,
+         HUSSAR,
+         KNIGHT,
+         PALADIN,
+         CAMEL_RIDER,
+         HEAVY_CAMEL_RIDER,
+         CAVALIER,
+         CAVALRY_ARCHER,
+         HEAVY_CAV_ARCHER,
+      ]);
+      return this;
+   }
+
+   disableBuildings(toDisable) {
+      this.buildings = this.buildings.concat(toDisable);
+      return this;
+   }
+
+   disableUnits(toDisable) {
+      this.units = this.units.concat(toDisable);
+      return this;
+   }
+
+   disableTechs(toDisable) {
+      this.techs = this.techs.concat(toDisable);
+      return this;
+   }
+
+   enableUnits(toEnable) {
+      for (let enable of toEnable) {
+         this.units.splice(this.units.indexOf(enable),1)
+      }
+      return this;
+   }
+
+   enableBuildings(toEnable) {
+      for (let enable of toEnable) {
+         this.buildings.splice(this.buildings.indexOf(enable),1)
+      }
+      return this;
+   }
+
+   build() {
+      return new Civ(this.buildings,
+                 this.techs,
+                 this.units,
+                 this.monkPrefix,
+                 {
+                    uniqueUnit: this.uniqueUnit,
+                    uniqueUnitElite: this.uniqueUnitElite,
+                    uniqueTechOne: this.uniqueTechOne,
+                    uniqueTechTwo: this.uniqueTechTwo,
+                  })
+   }
 }
 
 const civsConfig = { 
-    Aztecs: { 
-       disableHorses: true,
-       disabled: { 
-          buildings: [ 
-             KEEP,
-             BOMBARD_TOWER
-          ],
-          techs: [ 
-             THUMB_RING,
-             HOARDINGS,
-             RING_ARCHER_ARMOR,
-             MASONRY,
-             ARCHITECTURE,
-             BOMBARD_TOWER_TECH,
-             KEEP_TECH,
-             TWO_MAN_SAW,
-             GUILDS
-          ],
-          units: [ 
-             HAND_CANNONEER,
-             HALBERDIER,
-             CANNON_GALLEON,
-             ELITE_CANNON_GALLEON,
-             HEAVY_DEMO_SHIP,
-             GALLEON,
-             HEAVY_SCORPION,
-             BOMBARD_CANNON
-          ]
-       },
-       enabled: { 
-          units: [
-             EAGLE_SCOUT,
-             EAGLE_WARRIOR,
-             ELITE_EAGLE_WARRIOR,
-             XOLOTL_WARRIOR,
-          ]
-       },
-       monkPrefix: MONK_PREFIX_MESO,
-       unique: [ 
-          JAGUAR_WARRIOR,
-          ELITE_JAGUAR_WARRIOR,
-          ATLATL,
-          GARLAND_WARS
-       ]
-    },
-    Berbers: { 
-       disabled: { 
-          buildings: [ 
-             BOMBARD_TOWER,
-             KEEP
-          ],
-          techs: [ 
-             PARTHIAN_TACTICS,
-             SHIPWRIGHT,
-             SANCTITY,
-             BLOCK_PRINTING,
-             SAPPERS,
-             ARCHITECTURE,
-             BOMBARD_TOWER_TECH,
-             KEEP_TECH,
-             TWO_MAN_SAW
-          ],
-          units: [ 
-             ARBALESTER,
-             HALBERDIER,
-             PALADIN,
-             SIEGE_RAM,
-             SIEGE_ONAGER
-          ]
-       },
-       enabled: { 
-          units: [ 
-             GENITOUR,
-             ELITE_GENITOUR
-          ]
-       },
-       monkPrefix: MONK_PREFIX_AFRICAN,
-       unique: [ 
-          CAMEL_ARCHER,
-          ELITE_CAMEL_ARCHER,
-          KASBAH,
-          MAGHRABI_CAMELS
-       ]
-    },
-    Britons: { 
-       disabled: { 
-          buildings: [ 
-             BOMBARD_TOWER
-          ],
-          techs: [ 
-             THUMB_RING,
-             PARTHIAN_TACTICS,
-             BLOODLINES,
-             REDEMPTION,
-             ATONEMENT,
-             HERESY,
-             BOMBARD_TOWER_TECH,
-             TREADMILL_CRANE,
-             STONE_SHAFT_MINING,
-             CROP_ROTATION
-          ],
-          units: [ 
-             HAND_CANNONEER,
-             HUSSAR,
-             PALADIN,
-             CAMEL_RIDER,
-             HEAVY_CAMEL_RIDER,
-             ELITE_CANNON_GALLEON,
-             SIEGE_RAM,
-             SIEGE_ONAGER,
-             BOMBARD_CANNON
-          ]
-       },
-       unique: [ 
-          LONGBOWMAN,
-          ELITE_LONGBOWMAN,
-          YEOMEN,
-          WARWOLF
-       ]
-    },
-    Bulgarians: { 
-       disabled: { 
-          buildings: [ 
-             FORTIFIED_WALL,
-             BOMBARD_TOWER
-          ],
-          techs: [ 
-             RING_ARCHER_ARMOR,
-             DRY_DOCK,
-             SHIPWRIGHT,
-             FORTIFIED_WALL_TECH,
-             TREADMILL_CRANE,
-             ARROWSLITS,
-             BOMBARD_TOWER_TECH,
-             HOARDINGS,
-             SAPPERS,
-             ATONEMENT,
-             SANCTITY,
-             FAITH,
-             BLOCK_PRINTING,
-             TWO_MAN_SAW,
-             GUILDS
-          ],
-          units: [ 
-             CROSSBOWMAN,
-             ARBALESTER,
-             HAND_CANNONEER,
-             CHAMPION,
-             PALADIN,
-             CAMEL_RIDER,
-             HEAVY_CAMEL_RIDER,
-             BOMBARD_CANNON,
-             FAST_FIRE_SHIP,
-             HEAVY_DEMO_SHIP,
-             ELITE_CANNON_GALLEON
-          ]
-       },
-       enabled: { 
-          buildings: [ 
-             KREPOST
-          ],
-          units: [
-             KONNIK,
-             ELITE_KONNIK
-          ]
-       },
-       unique: [ 
-          KONNIK,
-          ELITE_KONNIK,
-          STIRRUPS,
-          BAGAINS
-       ]
-    },
-    Burmese: { 
-       disabled: { 
-          buildings: [ 
-             BOMBARD_TOWER
-          ],
-          techs: [ 
-             THUMB_RING,
-             SHIPWRIGHT,
-             HERESY,
-             HOARDINGS,
-             SAPPERS,
-             LEATHER_ARCHER_ARMOR,
-             RING_ARCHER_ARMOR,
-             BOMBARD_TOWER_TECH,
-             ARROWSLITS,
-             STONE_SHAFT_MINING
-          ],
-          units: [ 
-             ARBALESTER,
-             HAND_CANNONEER,
-             CAMEL_RIDER,
-             HEAVY_CAMEL_RIDER,
-             PALADIN,
-             FAST_FIRE_SHIP,
-             HEAVY_DEMO_SHIP,
-             SIEGE_RAM,
-             SIEGE_ONAGER
-          ]
-       },
-       enabled: { 
-          units: [ 
-             BATTLE_ELEPHANT,
-             ELITE_BATTLE_ELEPHANT
-          ]
-       },
-       monkPrefix: MONK_PREFIX_ASIAN,
-       unique: [ 
-          ARAMBAI,
-          ELITE_ARAMBAI,
-          HOWDAH,
-          MANIPUR_CAVALRY
-       ]
-    },
+    Aztecs: new CivBuilder({uniqueUnit: JAGUAR_WARRIOR,
+         uniqueUnitElite: ELITE_JAGUAR_WARRIOR,
+         uniqueTechOne: ATLATL,
+         uniqueTechTwo: GARLAND_WARS,
+         monkPrefix: MONK_PREFIX_MESO})
+      .disableBuildings([KEEP, BOMBARD_TOWER])
+      .disableTechs([
+         THUMB_RING,
+         HOARDINGS,
+         RING_ARCHER_ARMOR,
+         MASONRY,
+         ARCHITECTURE,
+         BOMBARD_TOWER_TECH,
+         KEEP_TECH,
+         TWO_MAN_SAW,
+         GUILDS])
+      .disableUnits([
+         HAND_CANNONEER,
+         HALBERDIER,
+         CANNON_GALLEON,
+         ELITE_CANNON_GALLEON,
+         HEAVY_DEMO_SHIP,
+         GALLEON,
+         HEAVY_SCORPION,
+         BOMBARD_CANNON])
+      .enableUnits([
+         XOLOTL_WARRIOR,
+         EAGLE_SCOUT,
+         EAGLE_WARRIOR,
+         ELITE_EAGLE_WARRIOR,])
+      .disableHorses().build(),
+    Berbers: new CivBuilder({uniqueUnit: CAMEL_ARCHER,
+         uniqueUnitElite: ELITE_CAMEL_ARCHER,
+         uniqueTechOne: KASBAH,
+         uniqueTechTwo: MAGHRABI_CAMELS,
+         monkPrefix: MONK_PREFIX_AFRICAN})
+      .disableBuildings([KEEP, BOMBARD_TOWER])
+      .disableTechs([
+         PARTHIAN_TACTICS,
+         SHIPWRIGHT,
+         SANCTITY,
+         BLOCK_PRINTING,
+         SAPPERS,
+         ARCHITECTURE,
+         BOMBARD_TOWER_TECH,
+         KEEP_TECH,
+         TWO_MAN_SAW
+      ])
+      .disableUnits([
+         ARBALESTER,
+         HALBERDIER,
+         PALADIN,
+         SIEGE_RAM,
+         SIEGE_ONAGER,
+      ])
+      .enableUnits([GENITOUR, ELITE_GENITOUR]).build(),
+    Britons: new CivBuilder({uniqueUnit: LONGBOWMAN,
+         uniqueUnitElite: ELITE_LONGBOWMAN,
+         uniqueTechOne: YEOMEN,
+         uniqueTechTwo: WARWOLF,
+         monkPrefix: MONK_PREFIX_GENERIC})
+      .disableBuildings([BOMBARD_TOWER])
+      .disableTechs([
+         THUMB_RING,
+         PARTHIAN_TACTICS,
+         BLOODLINES,
+         REDEMPTION,
+         ATONEMENT,
+         HERESY,
+         BOMBARD_TOWER_TECH,
+         TREADMILL_CRANE,
+         STONE_SHAFT_MINING,
+         CROP_ROTATION
+      ])
+      .disableUnits([
+         HAND_CANNONEER,
+         HUSSAR,
+         PALADIN,
+         CAMEL_RIDER,
+         HEAVY_CAMEL_RIDER,
+         ELITE_CANNON_GALLEON,
+         SIEGE_RAM,
+         SIEGE_ONAGER,
+         BOMBARD_CANNON
+      ]).build(),
+    Bulgarians: new CivBuilder({uniqueUnit: KONNIK,
+         uniqueUnitElite: ELITE_KONNIK,
+         uniqueTechOne: STIRRUPS,
+         uniqueTechTwo: BAGAINS,
+         monkPrefix: MONK_PREFIX_GENERIC})
+      .disableBuildings([FORTIFIED_WALL, BOMBARD_TOWER])
+      .disableTechs([
+         RING_ARCHER_ARMOR,
+         DRY_DOCK,
+         SHIPWRIGHT,
+         FORTIFIED_WALL_TECH,
+         TREADMILL_CRANE,
+         ARROWSLITS,
+         BOMBARD_TOWER_TECH,
+         HOARDINGS,
+         SAPPERS,
+         ATONEMENT,
+         SANCTITY,
+         FAITH,
+         BLOCK_PRINTING,
+         TWO_MAN_SAW,
+         GUILDS
+      ])
+      .disableUnits([
+         CROSSBOWMAN,
+         ARBALESTER,
+         HAND_CANNONEER,
+         CHAMPION,
+         PALADIN,
+         CAMEL_RIDER,
+         HEAVY_CAMEL_RIDER,
+         BOMBARD_CANNON,
+         FAST_FIRE_SHIP,
+         HEAVY_DEMO_SHIP,
+         ELITE_CANNON_GALLEON
+      ])
+      .enableBuildings([KREPOST])
+      .enableUnits([KONNIK, ELITE_KONNIK]).build(),
+    Burmese: new CivBuilder({uniqueUnit: ARAMBAI,
+         uniqueUnitElite: ELITE_ARAMBAI,
+         uniqueTechOne: HOWDAH,
+         uniqueTechTwo: MANIPUR_CAVALRY,
+         monkPrefix: MONK_PREFIX_ASIAN})
+      .disableBuildings([BOMBARD_TOWER])
+      .disableTechs([
+         THUMB_RING,
+         SHIPWRIGHT,
+         HERESY,
+         HOARDINGS,
+         SAPPERS,
+         LEATHER_ARCHER_ARMOR,
+         RING_ARCHER_ARMOR,
+         BOMBARD_TOWER_TECH,
+         ARROWSLITS,
+         STONE_SHAFT_MINING
+      ])
+      .disableUnits([
+         ARBALESTER,
+         HAND_CANNONEER,
+         CAMEL_RIDER,
+         HEAVY_CAMEL_RIDER,
+         PALADIN,
+         FAST_FIRE_SHIP,
+         HEAVY_DEMO_SHIP,
+         SIEGE_RAM,
+         SIEGE_ONAGER
+      ])
+      .enableUnits([BATTLE_ELEPHANT, ELITE_BATTLE_ELEPHANT]).build(),
     Byzantines: { 
        disabled: { 
           techs: [ 

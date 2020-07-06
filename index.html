@@ -22,7 +22,7 @@
                         <option>Britons</option>
                         <option>Bulgarians</option>
                         <option>Burmese</option>
-                        <option>Byzantines</option>
+                        <!-- <option>Byzantines</option>
                         <option>Celts</option>
                         <option>Chinese</option>
                         <option>Cumans</option>
@@ -51,7 +51,7 @@
                         <option>Teutons</option>
                         <option>Turks</option>
                         <option>Vietnamese</option>
-                        <option>Vikings</option>
+                        <option>Vikings</option> -->
                     </select>
                     <img id="civlogo" height="81" width="81" data-transparent="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
                 </div>
@@ -308,7 +308,7 @@
 
     function loadCiv() {
         const selectedCiv = document.getElementById('civselect').value;
-        civ(selectedCiv, tree);
+        civ(selectedCiv);
         if (selectedCiv in data.civ_helptexts) {
             document.getElementById('civtext').innerHTML = data.strings[data.civ_helptexts[selectedCiv]];
             document.getElementById('civlogo').src = `./img/Civs/${selectedCiv.toLowerCase()}.png`;
