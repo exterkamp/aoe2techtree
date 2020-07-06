@@ -168,8 +168,7 @@ const civsConfig = {
          uniqueTechTwo: GARLAND_WARS,
          monkPrefix: MONK_PREFIX_MESO})
       .disableBuildings([KEEP, BOMBARD_TOWER])
-      .disableTechs([
-         THUMB_RING,
+      .disableTechs([THUMB_RING,
          HOARDINGS,
          RING_ARCHER_ARMOR,
          MASONRY,
@@ -178,8 +177,7 @@ const civsConfig = {
          KEEP_TECH,
          TWO_MAN_SAW,
          GUILDS])
-      .disableUnits([
-         HAND_CANNONEER,
+      .disableUnits([HAND_CANNONEER,
          HALBERDIER,
          CANNON_GALLEON,
          ELITE_CANNON_GALLEON,
@@ -187,8 +185,7 @@ const civsConfig = {
          GALLEON,
          HEAVY_SCORPION,
          BOMBARD_CANNON])
-      .enableUnits([
-         XOLOTL_WARRIOR,
+      .enableUnits([XOLOTL_WARRIOR,
          EAGLE_SCOUT,
          EAGLE_WARRIOR,
          ELITE_EAGLE_WARRIOR,])
@@ -199,8 +196,7 @@ const civsConfig = {
          uniqueTechTwo: MAGHRABI_CAMELS,
          monkPrefix: MONK_PREFIX_AFRICAN})
       .disableBuildings([KEEP, BOMBARD_TOWER])
-      .disableTechs([
-         PARTHIAN_TACTICS,
+      .disableTechs([PARTHIAN_TACTICS,
          SHIPWRIGHT,
          SANCTITY,
          BLOCK_PRINTING,
@@ -210,8 +206,7 @@ const civsConfig = {
          KEEP_TECH,
          TWO_MAN_SAW
       ])
-      .disableUnits([
-         ARBALESTER,
+      .disableUnits([ARBALESTER,
          HALBERDIER,
          PALADIN,
          SIEGE_RAM,
@@ -224,8 +219,7 @@ const civsConfig = {
          uniqueTechTwo: WARWOLF,
          monkPrefix: MONK_PREFIX_GENERIC})
       .disableBuildings([BOMBARD_TOWER])
-      .disableTechs([
-         THUMB_RING,
+      .disableTechs([THUMB_RING,
          PARTHIAN_TACTICS,
          BLOODLINES,
          REDEMPTION,
@@ -236,8 +230,7 @@ const civsConfig = {
          STONE_SHAFT_MINING,
          CROP_ROTATION
       ])
-      .disableUnits([
-         HAND_CANNONEER,
+      .disableUnits([HAND_CANNONEER,
          HUSSAR,
          PALADIN,
          CAMEL_RIDER,
@@ -253,8 +246,7 @@ const civsConfig = {
          uniqueTechTwo: BAGAINS,
          monkPrefix: MONK_PREFIX_GENERIC})
       .disableBuildings([FORTIFIED_WALL, BOMBARD_TOWER])
-      .disableTechs([
-         RING_ARCHER_ARMOR,
+      .disableTechs([RING_ARCHER_ARMOR,
          DRY_DOCK,
          SHIPWRIGHT,
          FORTIFIED_WALL_TECH,
@@ -270,8 +262,7 @@ const civsConfig = {
          TWO_MAN_SAW,
          GUILDS
       ])
-      .disableUnits([
-         CROSSBOWMAN,
+      .disableUnits([CROSSBOWMAN,
          ARBALESTER,
          HAND_CANNONEER,
          CHAMPION,
@@ -291,8 +282,7 @@ const civsConfig = {
          uniqueTechTwo: MANIPUR_CAVALRY,
          monkPrefix: MONK_PREFIX_ASIAN})
       .disableBuildings([BOMBARD_TOWER])
-      .disableTechs([
-         THUMB_RING,
+      .disableTechs([THUMB_RING,
          SHIPWRIGHT,
          HERESY,
          HOARDINGS,
@@ -303,8 +293,7 @@ const civsConfig = {
          ARROWSLITS,
          STONE_SHAFT_MINING
       ])
-      .disableUnits([
-         ARBALESTER,
+      .disableUnits([ARBALESTER,
          HAND_CANNONEER,
          CAMEL_RIDER,
          HEAVY_CAMEL_RIDER,
@@ -315,192 +304,137 @@ const civsConfig = {
          SIEGE_ONAGER
       ])
       .enableUnits([BATTLE_ELEPHANT, ELITE_BATTLE_ELEPHANT]).build(),
-    Byzantines: { 
-       disabled: { 
-          techs: [ 
-             PARTHIAN_TACTICS,
-             BLOODLINES,
-             HERBAL_MEDICINE,
-             SAPPERS,
-             BLAST_FURNACE,
-             MASONRY,
-             ARCHITECTURE,
-             SIEGE_ENGINEERS,
-             HEATED_SHOT,
-             TREADMILL_CRANE
-          ],
-          units: [ 
-             HEAVY_SCORPION,
-             SIEGE_ONAGER
-          ]
-       },
-       unique: [ 
-          CATAPHRACT,
-          ELITE_CATAPHRACT,
-          GREEK_FIRE,
-          LOGISTICA
-       ]
-    },
-    Celts: { 
-       disabled: { 
-          buildings: [ 
-             BOMBARD_TOWER
-          ],
-          techs: [ 
-             THUMB_RING,
-             PARTHIAN_TACTICS,
-             SQUIRES,
-             BLOODLINES,
-             REDEMPTION,
-             ILLUMINATION,
-             ATONEMENT,
-             BLOCK_PRINTING,
-             THEOCRACY,
-             RING_ARCHER_ARMOR,
-             BRACER,
-             PLATE_BARDING_ARMOR,
-             ARCHITECTURE,
-             BOMBARD_TOWER_TECH,
-             TWO_MAN_SAW,
-             CROP_ROTATION
-          ],
-          units: [ 
-             ARBALESTER,
-             HAND_CANNONEER,
-             CAMEL_RIDER,
-             HEAVY_CAMEL_RIDER,
-             FAST_FIRE_SHIP,
-             ELITE_CANNON_GALLEON,
-             BOMBARD_CANNON
-          ]
-       },
-       unique: [ 
-          WOAD_RAIDER,
-          ELITE_WOAD_RAIDER,
-          STRONGHOLD,
-          FUROR_CELTICA
-       ]
-    },
-    Chinese: { 
-       disabled: { 
-          techs: [ 
-             PARTHIAN_TACTICS,
-             HERESY,
-             REDEMPTION,
-             HOARDINGS,
-             SIEGE_ENGINEERS,
-             TREADMILL_CRANE,
-             GUILDS,
-             CROP_ROTATION,
-             SUPPLIES,
-          ],
-          units: [ 
-             HAND_CANNONEER,
-             HUSSAR,
-             PALADIN,
-             FAST_FIRE_SHIP,
-             ELITE_CANNON_GALLEON,
-             SIEGE_ONAGER,
-             BOMBARD_CANNON
-          ]
-       },
-       monkPrefix: MONK_PREFIX_ASIAN,
-       unique: [ 
-          CHU_KO_NU,
-          ELITE_CHU_KO_NU,
-          GREAT_WALL,
-          ROCKETRY
-       ]
-    },
-    Cumans: { 
-       disabled: { 
-          buildings: [ 
-             GATE,
-             STONE_WALL,
-             FORTIFIED_WALL,
-             GUARD_TOWER,
-             KEEP,
-             BOMBARD_TOWER
-          ],
-          techs: [ 
-             BRACER,
-             DRY_DOCK,
-             SHIPWRIGHT,
-             FORTIFIED_WALL_TECH,
-             GUARD_TOWER_TECH,
-             TREADMILL_CRANE,
-             ARCHITECTURE,
-             SIEGE_ENGINEERS,
-             KEEP_TECH,
-             ARROWSLITS,
-             BOMBARD_TOWER_TECH,
-             ILLUMINATION,
-             REDEMPTION,
-             BLOCK_PRINTING,
-             THEOCRACY,
-             STONE_SHAFT_MINING,
-             HUSBANDRY,
-             SUPPLIES,
-          ],
-          units: [ 
-             ARBALESTER,
-             HAND_CANNONEER,
-             HEAVY_CAMEL_RIDER,
-             HEAVY_SCORPION,
-             BOMBARD_CANNON,
-             CANNON_GALLEON,
-             ELITE_CANNON_GALLEON,
-             HEAVY_DEMO_SHIP
-          ]
-       },
-       enabled: { 
-          units: [ 
-             STEPPE_LANCER,
-             ELITE_STEPPE_LANCER
-          ]
-       },
-       monkPrefix: MONK_PREFIX_ASIAN,
-       unique: [ 
-          KIPCHAK,
-          ELITE_KIPCHAK,
-          STEPPE_HUSBANDRY,
-          CUMAN_MERCENARIES
-       ]
-    },
-    Ethiopians: { 
-       disabled: { 
-          buildings: [ 
-             BOMBARD_TOWER
-          ],
-          techs: [ 
-             PARTHIAN_TACTICS,
-             BLOODLINES,
-             REDEMPTION,
-             BLOCK_PRINTING,
-             HOARDINGS,
-             PLATE_BARDING_ARMOR,
-             TREADMILL_CRANE,
-             ARROWSLITS,
-             BOMBARD_TOWER_TECH,
-             CROP_ROTATION
-          ],
-          units: [ 
-             HAND_CANNONEER,
-             CHAMPION,
-             PALADIN,
-             FAST_FIRE_SHIP,
-             ELITE_CANNON_GALLEON,
-             HEAVY_DEMO_SHIP
-          ]
-       },
-       monkPrefix: MONK_PREFIX_AFRICAN,
-       unique: [ 
-          SHOTEL_WARRIOR,
-          ELITE_SHOTEL_WARRIOR,
-          ROYAL_HEIRS,
-          TORSION_ENGINES
-       ]
-    },
+    Byzantines: new CivBuilder({uniqueUnit: CATAPHRACT,
+         uniqueUnitElite: ELITE_CATAPHRACT,
+         uniqueTechOne: GREEK_FIRE,
+         uniqueTechTwo: LOGISTICA,
+         monkPrefix: MONK_PREFIX_GENERIC})
+      .disableTechs([PARTHIAN_TACTICS,
+         BLOODLINES,
+         HERBAL_MEDICINE,
+         SAPPERS,
+         BLAST_FURNACE,
+         MASONRY,
+         ARCHITECTURE,
+         SIEGE_ENGINEERS,
+         HEATED_SHOT,
+         TREADMILL_CRANE
+      ])
+      .disableUnits([HEAVY_SCORPION,
+         SIEGE_ONAGER
+      ]).build(),
+    Celts: new CivBuilder({uniqueUnit: WOAD_RAIDER,
+         uniqueUnitElite: ELITE_WOAD_RAIDER,
+         uniqueTechOne: STRONGHOLD,
+         uniqueTechTwo: FUROR_CELTICA,
+         monkPrefix: MONK_PREFIX_GENERIC})
+      .disableBuildings([BOMBARD_TOWER])
+      .disableTechs([THUMB_RING,
+         PARTHIAN_TACTICS,
+         SQUIRES,
+         BLOODLINES,
+         REDEMPTION,
+         ILLUMINATION,
+         ATONEMENT,
+         BLOCK_PRINTING,
+         THEOCRACY,
+         RING_ARCHER_ARMOR,
+         BRACER,
+         PLATE_BARDING_ARMOR,
+         ARCHITECTURE,
+         BOMBARD_TOWER_TECH,
+         TWO_MAN_SAW,
+         CROP_ROTATION
+      ])
+      .disableUnits([ARBALESTER,
+         HAND_CANNONEER,
+         CAMEL_RIDER,
+         HEAVY_CAMEL_RIDER,
+         FAST_FIRE_SHIP,
+         ELITE_CANNON_GALLEON,
+         BOMBARD_CANNON
+      ]).build(),
+    Chinese: new CivBuilder({uniqueUnit: CHU_KO_NU,
+         uniqueUnitElite: ELITE_CHU_KO_NU,
+         uniqueTechOne: GREAT_WALL,
+         uniqueTechTwo: ROCKETRY,
+         monkPrefix: MONK_PREFIX_ASIAN})
+      .disableTechs([PARTHIAN_TACTICS,
+         HERESY,
+         REDEMPTION,
+         HOARDINGS,
+         SIEGE_ENGINEERS,
+         TREADMILL_CRANE,
+         GUILDS,
+         CROP_ROTATION,
+         SUPPLIES,])
+      .disableUnits([HAND_CANNONEER,
+         HUSSAR,
+         PALADIN,
+         FAST_FIRE_SHIP,
+         ELITE_CANNON_GALLEON,
+         SIEGE_ONAGER,
+         BOMBARD_CANNON]).build(),
+    Cumans: new CivBuilder({uniqueUnit: KIPCHAK,
+         uniqueUnitElite: ELITE_KIPCHAK,
+         uniqueTechOne: STEPPE_HUSBANDRY,
+         uniqueTechTwo: CUMAN_MERCENARIES,
+         monkPrefix: MONK_PREFIX_ASIAN})
+      .disableBuildings([GATE,
+         STONE_WALL,
+         FORTIFIED_WALL,
+         GUARD_TOWER,
+         KEEP,
+         BOMBARD_TOWER])
+      .disableTechs([BRACER,
+         DRY_DOCK,
+         SHIPWRIGHT,
+         FORTIFIED_WALL_TECH,
+         GUARD_TOWER_TECH,
+         TREADMILL_CRANE,
+         ARCHITECTURE,
+         SIEGE_ENGINEERS,
+         KEEP_TECH,
+         ARROWSLITS,
+         BOMBARD_TOWER_TECH,
+         ILLUMINATION,
+         REDEMPTION,
+         BLOCK_PRINTING,
+         THEOCRACY,
+         STONE_SHAFT_MINING,
+         HUSBANDRY,
+         SUPPLIES,])
+      .disableUnits([ARBALESTER,
+         HAND_CANNONEER,
+         HEAVY_CAMEL_RIDER,
+         HEAVY_SCORPION,
+         BOMBARD_CANNON,
+         CANNON_GALLEON,
+         ELITE_CANNON_GALLEON,
+         HEAVY_DEMO_SHIP])
+      .enableUnits([STEPPE_LANCER, ELITE_STEPPE_LANCER]).build(),
+    Ethiopians: new CivBuilder({uniqueUnit: SHOTEL_WARRIOR,
+      uniqueUnitElite: ELITE_SHOTEL_WARRIOR,
+      uniqueTechOne: ROYAL_HEIRS,
+      uniqueTechTwo: TORSION_ENGINES,
+      monkPrefix: MONK_PREFIX_AFRICAN})
+   .disableBuildings([BOMBARD_TOWER])
+   .disableTechs([PARTHIAN_TACTICS,
+      BLOODLINES,
+      REDEMPTION,
+      BLOCK_PRINTING,
+      HOARDINGS,
+      PLATE_BARDING_ARMOR,
+      TREADMILL_CRANE,
+      ARROWSLITS,
+      BOMBARD_TOWER_TECH,
+      CROP_ROTATION])
+   .disableUnits([HAND_CANNONEER,
+      CHAMPION,
+      PALADIN,
+      FAST_FIRE_SHIP,
+      ELITE_CANNON_GALLEON,
+      HEAVY_DEMO_SHIP]).build(),
     Franks: { 
        disabled: { 
           buildings: [ 
